@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome Gaming Hub</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Mr+Dafoe);
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:900);
+
+:root {
+  --pink:#f21d7a;
+  --aqua:aqua;
+  --hudImg:url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=68482087-b7e0-5892-886a-3b4b98198062&637170480369646321');
+/*   --distantCity:url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=a8749e9a-2c1c-5164-b7ac-3932bfa291c7&637171315511562927'); */
+  --borderAnimation:border 1s linear infinite;
+  --animationTime:1.5s;
+}
+body {
+  padding:0;
+  margin:0;
+  background:#111; 
+  overflow-x:hidden;
+  background-color: #000;
+}
+#game-container {
+  width:100vw;
+  height:auto;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+  perspective:600px;
+  font-family:monospace;
+  color:white;
+  transform:scale(1); 
+}
+h4 {
+  color:white;
+  position:relative;
+  font-family:monospace;
+}
+#game-box {
+  width:900px;
+  height:525px;
+  min-height:525px;
+  background:radial-gradient(circle, transparent, black 50%);
+  background-size:100% 100%;
+  background-position:50% 0px;
+  border:2px solid white;
+  position:relative;
+  overflow:hidden;
+  border-radius:10px;
+  font-size:0px;
+  text-align:center;
+  perspective:600px;
+  box-shadow:0 0 50px 25px black;
+  margin:25px 0;
+/*   transform:scale(1);  */
+}
+#game-box:after {
+  content:'';
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0;
+  left:0;
+  background-image:var(--hudImg);
+  background-size:100% 100%;
+  background-position:0% 50%;
+  background-repeat:no-repeat;
+  z-index:999999;
+}
+
+.ouch:after {
+  background-color:rgba(255,0,0,.25);
+  animation:ouch .5s linear forwards !important;
+}
+@keyframes ouch {
+  25% { transform:rotate(1deg) }
+  50% { transform:rotate(-1deg) }
+  75% { transform:rotate(1deg) }
+}
+
+#lanes {
+  width:66%; 
+  height:200%;
+  margin-top:-35%;
+  background-size:100% 200px;
+  background-position:0% 0%;
+  margin-left:calc(17%);
+  position:relative;
+  transform:rotateX(75deg);
+  background-size:100% 10%;
+  transition:.25s;
+}
+#lanes:before {
+  width:110%;
+  height:100%;
+  background:linear-gradient(to bottom, rgba(0,255,255,.75) 10%, transparent 10%, transparent 90%, rgba(0,255,255,.75) 90%);
+  background-size:100% 100px;
+  content:'';
+  position:absolute;
+  top:0;
+  left:-5%;
+  z-index:-1;
+  animation:var(--borderAnimation);
+}
+#lanes:after {
+  width:100%;
+  height:100%;
+  background:transparent;
+  background:linear-gradient(to right, transparent 33.33%, rgba(255,255,255,.05) 33.33%, rgba(255,255,255,.05) 66.33%, transparent 66.33%), linear-gradient(to bottom, #000f1e, #00143e);
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+@keyframes border {
+  100% { background-position:0 600px; }
+}
+
+#scoreBox {
+  position:absolute;
+  width:100%;
+  text-align:center;
+  top:64%;
+  font-size:12px;
+  z-index:999999999;
+  pointer-events:none;
+}
+#score {
+  font-size:60px;
+  line-height:100%;
+}
+#car{
+  width:100px;
+  height:100px;
+  background:red;
+  position:absolute;
+  bottom:5%;
+  left:calc(50% - 50px);
+  clip-path:polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+/*   z-index:999999999; */
+/*   transition:.15s; */
+}
+
+.left {
+  left:calc(33% - 50px) !important;
+}
+.right {
+  left:calc(66% - 50px) !important;
+}
+
+.right + #lanes {
+  margin-left:calc(0%);
+}
+.left + #lanes {
+  margin-left:calc(34%);
+}
+
+.enemy {
+  width:25px;
+  height:15px;
+  border-radius:50%;
+  position:absolute;
+  tranform-origin:center top;
+  transform-style: preserve-3d;
+  background:#f21d7a;
+  box-shadow:0 0 0 1px aqua, inset 0 3px 0 3px rgba(0,155,155,1),inset 0 8px 0 8px rgba(0,100,100,1);
+}
+.enemy0 {
+  top:5%;
+  left:15%;
+  animation:enemy1 var(--animationTime) steps(5) forwards;
+}
+@keyframes enemy1 {
+  100% { opacity:1; left:25%; top:110%; width:100px; height:60px; transform:translatex(-50%);}
+}
+.enemy1 {
+  top:5%;
+  left:50%;
+  transform:translateX(-50%);
+  animation:enemy2 var(--animationTime) steps(5) forwards;
+}
+@keyframes enemy2 {
+  100% { opacity:1; top:110%; transform:translateX(-17.5%);width:100px; height:60px;}
+}
+.enemy2 {
+  top:5%;
+  left:75%;
+  animation:enemy3 var(--animationTime) steps(5) forwards;
+}
+@keyframes enemy3 {
+  100% { opacity:1; left:75%; top:110%; width:100px; height:60px;}
+}
+
+#game-box:before {
+  content:'';
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0;
+  left:0;
+  background-size:100% 100%;
+  background-position:0% 50%;
+  background-repeat:no-repeat;
+  z-index:99999;
+  opacity:.5;
+}
+
+.cracked-one:before {
+  background-image:url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=f5409801-d1bf-5b5c-bc7c-5395b1661fcb&637170305713712321')
+}
+.cracked-two:before {
+  background-image:url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=07d1ba9a-5c49-5d78-9ff4-be4eef772f12&637170305857856321')
+}
+.cracked-three:before {
+  background-image:url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=a59c3194-ac67-538f-ab3d-cc66c7f497c9&637170366745124321')
+}
+.cracked-four:before {
+  background-image:url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=d93b0bb8-1d00-56c0-adb4-d8a6dd26923f&637170366875072321')
+}
+.cracked-five:before {
+  background-image:url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=56f8590a-1218-568d-9ab4-41e869a516e4&637170366991760321')
+}
+
+
+#gauge {
+  width:111px;
+  height:140px;
+  position:absolute;
+  bottom:-3.5%;
+  left:50%;
+  transform:translateX(-50%) scale(.75);
+  transition-origin:55px 55px;
+/*   background-color:red; */
+  z-index:9999999;
+}
+.gauge-one {
+  background-image:url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=c04a0f30-fdea-533a-a5a9-42652fba331d&637170467331790321');  
+}
+.gauge-two {
+  background-image:url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=60a40818-aa6b-5d89-a5cb-fbe96b9ede27&637170467568598321');
+  animation:wha 1s linear forwards;
+}
+.gauge-three {
+  background-image:url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=9bae7b08-3565-59c0-91e9-8d741c209319&637170467691994321');
+  animation:wha2 1s linear forwards;
+}
+.gauge-four {
+  background-image:url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=edccd53c-12af-507d-8a06-5d95e49c4677&637170467796202321');
+  animation:wha3 1s linear forwards;
+}
+.gauge-five {
+  background-image:url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=b54cb9d5-877e-5b76-9c14-b6071819e522&637170467906650321');
+  animation:wha4 1s linear infinite;
+}
+
+@keyframes wha {
+  50% { transform: translateX(-50%) scale(.65) ;}
+}
+@keyframes wha2 {
+  50% { transform: translateX(-50%) scale(.65) ; }
+}
+@keyframes wha3 {
+  50% { transform: translateX(-50%) scale(.65) ; }
+}
+@keyframes wha4 {
+  50% { filter:invert(1); }
+}
+
+#endDead, #endFinish {
+  position:absolute;
+  top:40%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  z-index:999999999;
+  padding:10px 20px 10px 15px;
+  color:black;
+  font-size:60px;
+  line-height:100%;
+  font-family: 'Titillium Web', sans-serif;
+  font-style: italic;
+  cursor:pointer;
+  background:white;
+  border-radius:10px;
+  box-shadow:4px 4px #f008b7;
+  text-shadow:2px 2px aqua;
+  max-width:275px;
+}
+#endFinish {
+  font-size:50px;
+  width:100%;
+  max-width:320px;
+  top:50%;
+}
+#endFinish  h3 {
+  font-size:28px;
+  line-height:36px;
+  text-shadow:none;
+}
+#endFinish  h2 {
+  font-size:36px;
+  line-height:36px;
+}
+#endFinish a {
+  color:black;
+  background:var(--pink);
+  display:block;
+  padding:10px;
+  border-radius:5px;
+  text-decoration:none;
+  font-size:28px;
+  text-shadow:1px 1px white;
+}
+#endFinish a:hover {
+  background:var(--aqua);
+}
+#endFinish .offer-disc {
+  font-size:11px;
+  line-height:100%;
+  letter-spacing:0;
+  font-family:sans-serif;
+}
+
+#endDead p, #endFinish p {
+  font-size:24px;
+  line-height:30px;
+  letter-spacing:-2px;
+  font-family: monospace;
+  text-shadow:none;
+  color:black;
+}
+#endDead, #endFinish {
+  display:none;
+  cursor:inherit;
+}
+.endOn {
+  display:block !important;
+  animation:end 1s linear forwards;
+}
+@keyframes end {
+  0% { transform:translate(-50%,-50%) scale(.1) }
+  75% { transform:translate(-50%,-50%) scale(1.15); }
+  100% { transform:translate(-50%,-50%) scale(1); }
+}
+#endDead{
+  color:#f008b7;
+  text-shadow:2px 2px black;
+}
+
+/* this css courtesy of https://codepen.io/hugo/pen/wsKGc/ */
+.wrapper {
+  background:  
+  radial-gradient(ellipse at center, rgba(127,0,173,0.6) 0%,
+  rgba(0,0,0,0.8) 60%, 
+  rgba(0,0,0,1) 90%), 
+  url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/31787/stars.jpg);
+  background-size: cover;
+  min-height: 100vh;
+  overflow: hidden;
+  perspective: 1200px; 
+}
+.grid {
+background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0px, rgba(54, 226, 248, 0.5) 0%, rgba(54, 226, 248, 0.5) 3px, rgba(0, 0, 0, 0) 0px), linear-gradient(90deg, rgba(0, 0, 0, 0) 0px, rgba(54, 226, 248, 0.5) 0%, rgba(54, 226, 248, 0.5) 3px, rgba(0, 0, 0, 0) 0px); 
+  background-size: 4em 4em, 4em 4em;
+  background-color: black;
+  border-top: 5px solid rgb(209,0,177);
+  box-shadow: 0 -25px 45px rgb(209,0,177);
+  height: 100vh;
+  transform: scale(1.26) rotateX(80deg);
+  position: absolute;
+  width: 200%;
+  top:25%;
+}
+  
+ .grid:after {
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 50%,rgba(0,0,0,1) 95%);
+    content: '';
+    height: 100%;
+    position: absolute;
+    width: 100%;
+   }
+  
+  .grid:before {
+   background: radial-gradient(ellipse at center, rgba(0,0,0,0) 30%,rgba(209,0,177,0.5) 90%);     
+   content: '';
+   height: 100%;
+   position: absolute;
+   width: 100%;
+  }
+
+/* this css courtesy of https://codepen.io/boldfacedesign/pen/EoGgD */
+
+#heroText {
+  position:relative;
+  transform:scale(.65);
+  z-index:9999999;
+}
+.chrome {
+  position: relative;
+  color:white;
+  font-size: 200px;
+  font-family: 'Titillium Web', sans-serif;
+  font-style: italic;
+  margin: 0;
+  line-height: 1;
+  text-shadow:5px 5px aqua;
+}
+.dreams {
+  position: absolute;
+  margin: 0px;
+  font-family: 'Mr Dafoe', cursive;
+  font-size: 100px;
+  color: #f008b7;
+  margin-left: 400px;
+  margin-top: -80px;
+  text-shadow:2px 2px white;
+  z-index: 20;
+}
+
+#leftBtn, #rightBtn {
+  width:50%;
+  height:100%;
+  position:absolute;
+  bottom:0;
+  background-color:transparent;
+  z-index:9999999;
+  opacity:0;
+  display:none;
+}
+#leftBtn {
+  left:0;
+}
+#rightBtn {
+  right:0;
+}
+#leftBtn:after, #rightBtn:after {
+  content:'<';
+  position:absolute;
+  font-size:100px;
+  display:block;
+  text-align:right;
+  right:50px;
+  top:60%;
+}
+#rightBtn:after {  
+  content:'>';
+  text-align:left;
+  left:50px;
+}
+#finishLine {
+  width:100%;
+  height:30px;
+  background-image: linear-gradient(45deg, var(--pink) 25%, transparent 25%), linear-gradient(-45deg, var(--pink) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--pink) 75%), linear-gradient(-45deg, transparent 75%, var(--pink) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  position:absolute;
+  top:0;
+  opacity:0;
+}
+.finishLine {
+  animation:finish 2s linear forwards;
+}
+@keyframes finish {
+  0% { opacity:1; }
+  100% { top: 100%; opacity:1 }
+}
+
+#startBtn {
+  position:relative;
+  z-index:999999999;
+  padding:10px 20px 10px 15px;
+  color:black;
+  line-height:100%;
+  font-family: 'Titillium Web', sans-serif;
+  font-style: italic;  
+  background:white;
+  border-radius:10px;
+  box-shadow:4px 4px #f008b7;
+  text-shadow:2px 2px aqua;
+  text-align:center;
+  white-space:nowrap;
+}
+#startBtn p {
+  margin:0 0 10px 0;  
+  font-size:18px;
+  text-shadow:none;
+  font-family:monospace;
+  letter-spacing:0px;
+}
+#startBtn div {
+  font-size:24px;
+  line-height:28px;
+  background:#efefef;
+  padding:10px;
+  border-radius:5px;
+  display:inline-block;
+  cursor:pointer;
+  margin:0 5px;
+}
+
+.startOff {
+  opacity:.15;
+  pointer-events:none;
+  user-select:none;
+}
+
+@media screen and (max-width:900px) {
+  #game-box {
+    transform:scale(.75) translateY(-25px);
+    margin:0;
+  }
+  h4 {
+    margin-top:-25px;
+  }
+  #heroText { 
+   transform:scale(.30);
+  }
+  #leftBtn, #rightBtn {
+    opacity:.25;
+    display:block;
+  }
+}
+
+/* video {
+  position:absolute;
+  left:-10%;
+  z-index:-1;
+  filter:sepia(1)
+  transform:rotatex(-45deg) translateY(-20%);
+} */
+
+
+    </style>
+</head>
+<body>
+  <button><a href="/menu.html" style="color: black;align-items: center;text-align: center;display: flex;justify-content: center;">HOME</a></button>
+    <div id="game-container" class="wrapper">
+        <div class="grid"></div>
+          <div id="heroText">
+            <div class="chrome">POTHOLES</div>
+            <div class="dreams">The Video Game</div>
+          </div>
+        <h4>Arrows to move / Avoid the potholes</h4>
+        <div id="startBtn">
+            <p>Choose a difficulty</p>
+            <div onclick="startGame('SLOW')">SLOW</div>
+            <div onclick="startGame('FAST')">FAST</div>
+            <div onclick="startGame('INSANE')">INSANE</div>
+          </div>
+        <div id="game-box">
+      <!--     <video id="hym-video" width="120%" height="100%" autoplay muted loop></video> -->
+          <div id="car" class="center"></div>
+          <div id="lanes"><div id="finishLine"></div></div>
+          <div id="scoreBox">POTHOLES AVOIDED<BR><span id="score">0</span></div>  
+          <div id="gauge" class="gauge-one"></div>      
+          
+          <div id="endDead">OUCH!
+              <p>You may want to get your alignment checked out.</p></div>
+          <div id="endFinish">
+          <h3>POTHOLE SPECIAL</h2>
+          <p>Complimentary Aligment Check</p>
+          <h2><strong style="font-size:60px">+10% Off</strong><br>Recommended Service</h3>
+          <a href="#" class="offer-btn">Get This Service</a>
+          <p class="offer-disc">Present upon arrival. Per axle. One per customer. No cash value. Max value $[XXX]. No further discounts apply. See dealer for details. Expires %%todaysDatePlus30%%.</p>
+          </div>
+            
+            <div id="leftBtn"></div>
+            <div id="rightBtn"></div>
+        </div>   
+      </div>
+      <button><a href="/bricksbreaker.html" style="color: black;align-items: center;text-align: center;display: flex;justify-content: center;">NEXT</a></button>
+</body>
+</html>
+
+<script>
+    var score = 0
+var box = document.getElementById('game-box')
+var lane = document.getElementById('lanes')
+var cube = document.getElementById('cube-box')
+var gauge = document.getElementById('gauge')
+window.addEventListener('keyup', function(e){
+  var car = document.querySelector('#car')
+  if(e.keyCode == 37) {
+    if(car.className == "center"){
+      car.className = "left"
+    } 
+    if(car.className == "right"){
+      car.className = "center"
+    }        
+  }
+    
+  if(e.keyCode == 39) {
+    if(car.className == "center") {
+      car.className = "right"
+    }    
+    if(car.className == "left") {
+      car.className = "center"
+    }
+  }
+  // console.log(car.className)
+})
+window.addEventListener('click', function(e){
+  var car = document.querySelector('#car')
+  if(e.target.id == "leftBtn") {
+    if(car.className == "center"){
+      car.className = "left"
+    } 
+    if(car.className == "right"){
+      car.className = "center"
+    }        
+  }
+    
+  if(e.target.id == "rightBtn") {
+    if(car.className == "center") {
+      car.className = "right"
+    }    
+    if(car.className == "left") {
+      car.className = "center"
+    }
+  }
+})
+
+function color() {
+  return "hsl("+Math.floor(Math.random()*360)+"deg,100%,50%)"
+}
+
+var btns = document.querySelectorAll('#startBtn div')
+var btn = document.querySelector('#startBtn')
+var root = document.documentElement;
+// for(var i = 0;i<btns.length;i++) {
+//   btns[i].addEventListener('click', startGame(btns[i].innerText))  
+// }
+function startGame(speed) {  
+  var en = document.querySelectorAll('.enemy')
+  for(var i=0;i<en.length;i++){
+    en[i].remove()
+  }
+  var hits = 0
+  var holes = 52
+  document.querySelector('#score').innerHTML = document.querySelectorAll('.enemy').length
+  var root = document.documentElement;
+  root.style.setProperty('--borderAnimation', 'border 1s linear infinite');
+  var hitCheck = 5
+  if(speed == 'SLOW') {
+    root.style.setProperty('--animationTime', '1.5s');
+  }
+  if(speed == 'FAST') {
+    root.style.setProperty('--animationTime', '1s');
+  }
+  if(speed == 'INSANE') {
+    var hitCheck = 10
+    root.style.setProperty('--animationTime', '.75s');
+  }    
+  var run = setInterval(buildEnemy,1500)
+  var hit = setInterval(ouchy,1000/hitCheck)
+  btn.classList.add('startOff') 
+  document.getElementById('endFinish').classList.remove('endOn')  
+  
+  function enemy() {
+    var div = document.createElement('div')
+    var num = Math.random() < .5 ? "enemy1" : 11;
+    if(num == 11) {
+      div.className = "enemy enemy"+Math.floor(Math.random()*3)
+    } else {
+      div.className = "enemy enemy1"
+    }  
+    lanes.appendChild(div)
+    holes--
+  }
+  function buildEnemy() {
+        enemy()
+        enemy()
+  }
+  
+  function ouchy() {      
+      // if(holes < 42) {
+      //   root.style.setProperty('--animationTime', '1s');
+      // }  
+      if(holes < 1) { document.getElementById('finishLine').classList.add('finishLine')
+        document.querySelectorAll('.enemy')[document.querySelectorAll('.enemy').length - 2].remove()
+        document.querySelectorAll('.enemy')[document.querySelectorAll('.enemy').length - 1].remove()
+        clearInterval(hit)   
+        clearInterval(run)    
+        setTimeout(function() {                    
+          // document.getElementById('endFinish').classList.add('endOn')
+          btn.classList.remove('startOff')
+          var root = document.documentElement;
+          root.style.setProperty('--borderAnimation', 'none');
+        },2000)  
+     }  
+  
+  var car = document.querySelector('#car')
+  var enemy = document.querySelectorAll('.enemy')
+  for(var i=0;i<enemy.length;i++) {
+    var a = enemy[i].getBoundingClientRect()
+    var b = car.getBoundingClientRect()
+    // console.log(a)
+    // console.log(b)
+    var ouch = !(a.right < b.left || 
+                a.left > b.right || 
+                a.bottom < b.top || 
+                a.top > b.bottom)
+    
+    if(ouch) {
+      hits++
+      console.log("ouch")
+      enemy[i].remove()
+      box.classList.add("ouch")
+      setTimeout(function(){
+        box.classList.remove("ouch")
+      },750);
+      if(hits == 2) {
+        box.classList.add('cracked-one')
+        gauge.classList.add('gauge-two')
+      }
+      if(hits == 4) {
+        box.classList.add('cracked-two')
+        gauge.classList.add('gauge-three')
+      }
+      if(hits == 6) {
+        box.classList.add('cracked-three')
+        gauge.classList.add('gauge-four')
+      }
+      if(hits == 8) {
+        box.classList.add('cracked-four')
+        gauge.classList.add('gauge-five')
+      }
+      if(hits >= 9) {
+        box.classList.add('cracked-five')
+        gauge.classList.add('gauge-five')
+      }      
+    }  
+  document.querySelector('#score').innerHTML = document.querySelectorAll('.enemy').length
+    }
+  }
+}
+
+</script>

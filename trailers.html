@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome Gaming Hub</title>
+    <link rel="stylsheet" href="style.css">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <style>
+         body{
+        padding:0px;
+        margin:0px;
+        background-image: url("https://wallpaperaccess.com/full/13453.jpg");
+        background-size: cover;
+    }
+    .dialog{
+        width: 100%;
+        height: 100%;
+        background-color: #00000077;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        /* visibility: hidden; */
+        z-index: 10;
+    }
+
+    .dialog-in{
+        width: 80vw;
+        background-color:white;
+        height: 80vh;
+        box-shadow: 0px 0px 10px #00000055;
+        z-index: 10px;
+        border-radius: 10px;
+    }
+
+    @keyframes zoom-in{
+        from{transform: scale(0.7)}
+        to{transform: scale(1)}
+    }
+
+    @keyframes zoom-out{
+        from{transform: scale(1)}
+        to{transform: scale(0.7)}
+    }
+
+    @keyframes fade-in{
+        from{
+            opacity: 0; 
+        }
+        to{
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    @keyframes fade-out{
+        from{
+            opacity: 1; 
+            visibility: visible;
+        }
+        to{
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    input + div{
+        animation: fade-out 0.5s forwards;
+    }
+
+    input:checked + div{animation: fade-in 0.5s forwards;}
+    input:checked + div > div{animation: zoom-in 0.5s forwards;}
+
+    input + div{animation: fade-out 0.5s forwards;}
+    input + div > div{animation: zoom-out 0.5s forwards;}
+    
+    #caixa{display: none;}
+
+    label{
+        position: relative;
+    }
+    .bt-close{
+        /* font-size: 20px;  */
+        position: absolute;   
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: solid 3px #00000055;
+        box-shadow: 0px 0px 3px #00000055;
+        top: -10px;
+        right: -10px;
+        font-family: monospace;
+        border-radius: 100%;
+        background-color: white;
+    }
+
+    iframe{
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    
+
+    .card img{
+        width: 100%;
+        /* width: 320px; */
+        /* height: 180px; */
+        position: absolute;
+    }
+
+    .card img:nth-child(2){opacity: 0; transition:0.5s}
+    .card:hover img:nth-child(2){opacity: 1; transition:0.5s}
+
+    .card{
+        position: relative;
+        width: 270px;
+        height: 150px;
+        display: inline-block;
+        border-radius: 10px;
+        cursor: pointer;
+        margin:5px;
+        overflow:hidden;
+    }
+
+    *{transition:0.2s}
+    .card:hover{
+        transform:scale(1.1);
+        z-index: 1;;
+    }
+
+    .capa{
+        width: 100%;
+        height: 100%;
+
+        background-image: linear-gradient(transparent 0px,black 70%);
+        position: fixed;
+    }
+
+    .container{
+        width: 1200px;
+        max-width: 100%;
+        margin: 50px auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+  
+    </style>
+</head>
+<body>
+    <button><a href="/menu.html" style="color: #fff;display: flex;border: 3PX solid white;">HOME</a></button>
+<div class="capa"></div>
+
+<div id="conteudo" class="container"></div>
+
+<input type="checkbox" id="caixa">
+<div class="dialog" id='dia'>
+    <div class="dialog-in">
+        <label class="bt-close" for="caixa">X</label>
+        <iframe id="ifr"></iframe>
+    </div>    
+</div>
+<h1></h1>
+<!-- TRAILERS --> 
+<div id="carouselExample" class="carousel slide">
+    <div class="carousel-inner">
+        <div class="carousel-item">
+          <video autoplay controls src="/videos/DIABLO 4 Inarius Army Vs Army Of Lilith Battle Scene Cinematic 4K.mp4" style="width: 100%; height: 100vh;"class="d-block w-100" alt="..."video>
+        </div>
+        <div class="carousel-item">
+          <video autoplay controls src="/videos/Gameplay Reveal Trailer _ Call of Duty_ Modern Warfare III.mp4" style="width: 100%; height: 100vh;" class="d-block w-100" alt="..."video>
+        </div>
+      </div>
+      <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+              <video autoplay controls src="/videos/Grand Theft Auto V - Gameplay Trailer.mp4"style="width: 100%; height: 100vh; class="d-block w-100 alt="..."video>
+            </div>
+            <div class="carousel-item">
+              <video autoplay controls src="/videos/[8K120FPS] COD Modern Warfare 2 looks close to reallife on RTX4090 in 8K - BeyondallLimits Reshade.mp4" style="width: 100%; height: 100vh;"class="d-block w-100" alt="..."video>
+            </div>
+        
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    
+</body>
+</html>
+
+<script>
+
+</script>
